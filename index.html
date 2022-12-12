@@ -1,0 +1,891 @@
+<html>
+
+<head>
+    <title>Mini Condomínio</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%
+        }
+    </style>
+</head>
+
+<body>
+    <script src="js/three.js"></script>
+    <script src="js/controls/OrbitControls.js"></script>
+    <script src="js/loaders/GLTFLoader.js"></script>
+    <script>
+        
+        //CAMERA
+        var scene = new THREE.Scene();
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        var renderer = new THREE.WebGLRenderer();
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+        //CARREGA AS TEXTURAS (BACKGROUND E GRAMA)
+
+        var loader = new THREE.TextureLoader();
+
+        grass = loader.load("img/grass.jpg");
+        spacebg = loader.load("img/space.jpg");
+
+        //BASE (GRAMA)
+
+        const geometry = new THREE.BoxGeometry(42, 38, 0.3);
+        var material1 = new THREE.MeshPhongMaterial({
+            map: grass,
+        })
+
+        const plane = new THREE.Mesh(geometry, material1);
+        plane.position.set(0, -0.2, 0);
+        plane.rotation.x = Math.PI * -.5;
+        scene.add(plane);
+
+        //BASE (PREDIOS)
+
+        const plane1 = new THREE.Mesh(new THREE.BoxGeometry(30, 30, 0.4), new THREE.MeshLambertMaterial({ color: 0x4F4F4F }));
+        plane1.position.set(0, -0.1, 0);
+        plane1.rotation.x = Math.PI * -.5;
+        scene.add(plane1);
+
+        //ILUMINAÇÃO      
+
+        // LUZ AMBIENTE
+        const light = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(light);
+        //LUZ DIRECIONAL
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        directionalLight.position.set(-10, 5, 10);
+        directionalLight.target.position.set(0, 0, 0);
+        scene.add(directionalLight);
+        scene.add(directionalLight.target);
+
+        //ADICIONA O BACKGROUND
+
+        scene.background = spacebg;
+
+        //DONUT
+        const gltfLoaderDonut = new THREE.GLTFLoader();
+        const urlDonut = 'assets/glazed_donut_simple_model/scene.gltf';
+
+        gltfLoaderDonut.load(urlDonut, (gltf) => {
+            gltf.scene.scale.set(1.5, 1.5, 1.5);
+            gltf.scene.position.set(5, 9.5, 5);
+            gltf.scene.rotateZ(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            donut = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        //ARVORES
+
+        const gltfLoader = new THREE.GLTFLoader();
+        const url = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(19, 0, 0);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader1 = new THREE.GLTFLoader();
+        const url1 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader1.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(19, 0, 5);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader2 = new THREE.GLTFLoader();
+        const url2 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader2.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(19, 0, 10);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader3 = new THREE.GLTFLoader();
+        const url3 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader3.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(19, 0, 15);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader4 = new THREE.GLTFLoader();
+        const url4 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader4.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(19, 0, - 15);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader5 = new THREE.GLTFLoader();
+        const url5 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader5.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(19, 0, - 10);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader6 = new THREE.GLTFLoader();
+        const url6 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader6.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(19, 0, - 5);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader7 = new THREE.GLTFLoader();
+        const url7 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader7.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(-19, 0, 0);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader8 = new THREE.GLTFLoader();
+        const url8 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader8.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(-19, 0, 5);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader9 = new THREE.GLTFLoader();
+        const url9 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader9.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(-19, 0, 10);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader10 = new THREE.GLTFLoader();
+        const url10 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader10.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(-19, 0, 15);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader11 = new THREE.GLTFLoader();
+        const url11 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader11.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(-19, 0, - 15);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader12 = new THREE.GLTFLoader();
+        const url12 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader12.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(-19, 0, - 10);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoader13 = new THREE.GLTFLoader();
+        const url13 = 'assets/low_poly_tree_1/scene.gltf';
+
+        gltfLoader13.load(url, (gltf) => {
+            gltf.scene.scale.set(1, 1, 1);
+            gltf.scene.position.set(-19, 0, - 5);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        //GATO
+
+        const gltfLoadergato = new THREE.GLTFLoader();
+        const urlgato = 'assets/dog/scene.gltf';
+
+        gltfLoadergato.load(urlgato, (gltf) => {
+            gltf.scene.scale.set(2, 2, 2);
+            gltf.scene.position.set(0, 0.2, 0);
+            const rootgato = gltf.scene;
+            gato = rootgato.getObjectByName('Sketchfab_Scene')
+            scene.add(rootgato);
+        });
+
+        //BANCO
+        const gltfLoaderbanco = new THREE.GLTFLoader();
+        const urlbanco = 'assets/banco/scene.gltf';
+
+        gltfLoaderbanco.load(urlbanco, (gltf) => {
+            gltf.scene.scale.set(0.35, 0.35, 0.35);
+            gltf.scene.position.set(4.5, 0, 10);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoaderbanco2 = new THREE.GLTFLoader();
+        const urlbanco2 = 'assets/banco/scene.gltf';
+
+        gltfLoaderbanco2.load(urlbanco2, (gltf) => {
+            gltf.scene.scale.set(0.35, 0.35, 0.35);
+            gltf.scene.position.set(-10.5, 0, 10);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoaderbanco3 = new THREE.GLTFLoader();
+        const urlbanco3 = 'assets/banco/scene.gltf';
+
+        gltfLoaderbanco3.load(urlbanco, (gltf) => {
+            gltf.scene.scale.set(0.35, 0.35, 0.35);
+            gltf.scene.position.set(4.5, 0, -10.5);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoaderbanco4 = new THREE.GLTFLoader();
+        const urlbanco4 = 'assets/banco/scene.gltf';
+
+        gltfLoaderbanco4.load(urlbanco2, (gltf) => {
+            gltf.scene.scale.set(0.35, 0.35, 0.35);
+            gltf.scene.position.set(-10.5, 0, -10.5);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        //CERCAS
+
+        //TRAS - DIREITA
+        const gltfLoadercerca = new THREE.GLTFLoader();
+        const urlcerca = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca.load(urlcerca, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(5, 0.2, 9);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca2 = new THREE.GLTFLoader();
+        const urlcerca2 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca2.load(urlcerca2, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(8.5, 0.2, 9);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca3 = new THREE.GLTFLoader();
+        const urlcerca3 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca3.load(urlcerca3, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(12, 0.2, 9);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        //TRAS - TRAS
+        const gltfLoadercerca13 = new THREE.GLTFLoader();
+        const urlcerca13 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca13.load(urlcerca, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(16.25, 0.2, -9.5);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca14 = new THREE.GLTFLoader();
+        const urlcerca14 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca14.load(urlcerca2, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(16.25, 0.2, -6);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca15 = new THREE.GLTFLoader();
+        const urlcerca15 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca15.load(urlcerca3, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(16.25, 0.2, -2.5);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca16 = new THREE.GLTFLoader();
+        const urlcerca16 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca16.load(urlcerca3, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(16.25, 0.2, 1);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca17 = new THREE.GLTFLoader();
+        const urlcerca17 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca17.load(urlcerca3, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(16.25, 0.2, 4.5);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca18 = new THREE.GLTFLoader();
+        const urlcerca18 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca18.load(urlcerca3, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(16.25, 0.2, 8);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca19 = new THREE.GLTFLoader();
+        const urlcerca19 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca19.load(urlcerca3, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(16.25, 0.2, 11.5);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        //TRAS - ESQUERDA
+        const gltfLoadercerca7 = new THREE.GLTFLoader();
+        const urlcerca7 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca.load(urlcerca, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(5, 0.2, -16);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca8 = new THREE.GLTFLoader();
+        const urlcerca8 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca2.load(urlcerca2, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(8.5, 0.2, -16);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca9 = new THREE.GLTFLoader();
+        const urlcerca9 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca3.load(urlcerca3, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(12, 0.2, -16);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        //FRENTE - TRAS
+        const gltfLoadercerca20 = new THREE.GLTFLoader();
+        const urlcerca20 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca20.load(urlcerca, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(1.25, 0.2, -9.5);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca21 = new THREE.GLTFLoader();
+        const urlcerca21 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca21.load(urlcerca2, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(1.25, 0.2, -6);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca22 = new THREE.GLTFLoader();
+        const urlcerca22 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca22.load(urlcerca3, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(1.25, 0.2, -2.5);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca23 = new THREE.GLTFLoader();
+        const urlcerca23 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca23.load(urlcerca3, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(1.25, 0.2, 1);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca24 = new THREE.GLTFLoader();
+        const urlcerca24 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca24.load(urlcerca3, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(1.25, 0.2, 4.5);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca25 = new THREE.GLTFLoader();
+        const urlcerca25 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca25.load(urlcerca3, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(1.25, 0.2, 8);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+        const gltfLoadercerca26 = new THREE.GLTFLoader();
+        const urlcerca26 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca26.load(urlcerca3, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(1.25, 0.2, 11.5);
+            gltf.scene.rotateY(-90 * Math.PI / 180);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        //FRENTE - DIREITA
+        const gltfLoadercerca4 = new THREE.GLTFLoader();
+        const urlcerca4 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca4.load(urlcerca4, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(-10, 0.2, 9);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoadercerca5 = new THREE.GLTFLoader();
+        const urlcerca5 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca5.load(urlcerca5, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(-6.5, 0.2, 9);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoadercerca6 = new THREE.GLTFLoader();
+        const urlcerca6 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca6.load(urlcerca6, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(-3, 0.2, 9);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        //FRENTE - ESQUERDA
+        const gltfLoadercerca10 = new THREE.GLTFLoader();
+        const urlcerca10 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca4.load(urlcerca4, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(-10, 0.2, -16);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoadercerca11 = new THREE.GLTFLoader();
+        const urlcerca11 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca5.load(urlcerca5, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(-6.5, 0.2, -16);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        const gltfLoadercerca12 = new THREE.GLTFLoader();
+        const urlcerca12 = 'assets/cerca/scene.gltf';
+
+        gltfLoadercerca6.load(urlcerca6, (gltf) => {
+            gltf.scene.scale.set(0.50, 0.50, 0.50);
+            gltf.scene.position.set(-3, 0.2, -16);
+            const root = gltf.scene;
+            carro = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        //SOL
+
+        const gltfLoaderSol = new THREE.GLTFLoader();
+        const urlSol = 'assets/Sun/scene.gltf';
+
+        gltfLoaderSol.load(urlSol, (gltf) => {
+            gltf.scene.scale.set(0.2, 0.2, 0.2);
+            gltf.scene.position.set(0, -20, 10);
+            const root = gltf.scene;
+            sol = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        //LUA
+        const gltfLoaderLua = new THREE.GLTFLoader();
+        const urlLua = 'assets/lua/scene.gltf';
+
+        gltfLoaderLua.load(urlLua, (gltf) => {
+            gltf.scene.scale.set(2, 2, 2);
+            gltf.scene.position.set(-5, 18, -10);
+            const root = gltf.scene;
+            lua = root.getObjectByName('Sketchfab_Scene')
+            scene.add(root);
+        });
+
+        //POSTES
+
+        // TRAS - ESQUERDA
+        const poste1 = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 3, 8), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.8 }));
+        const lamp1 = new THREE.Mesh(new THREE.ConeGeometry(0.25, 0.5, 8), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.8 }));
+        poste1.position.set(3, 1.5, -12); lamp1.position.set(2.8, 2.9, -12); lamp1.rotateZ(-45 * Math.PI / 180);
+        scene.add(poste1, lamp1);
+        //TRAS - MEIO
+        const poste2 = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 3, 8), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.8 }));
+        const lamp2 = new THREE.Mesh(new THREE.ConeGeometry(0.25, 0.5, 8), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.8 }));
+        poste2.position.set(3, 1.5, 0); lamp2.position.set(2.8, 2.9, 0); lamp2.rotateZ(-45 * Math.PI / 180);
+        scene.add(poste2, lamp2);
+        //TRAS - DIREITA
+        const poste3 = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 3, 8), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.8 }));
+        const lamp3 = new THREE.Mesh(new THREE.ConeGeometry(0.25, 0.5, 8), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.8 }));
+        poste3.position.set(3, 1.5, 12); lamp3.position.set(2.8, 2.9, 12); lamp3.rotateZ(-45 * Math.PI / 180);
+        scene.add(poste3, lamp3);
+        // FRENTE - ESQUERDA
+        const poste4 = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 3, 8), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.8 }));
+        const lamp4 = new THREE.Mesh(new THREE.ConeGeometry(0.25, 0.5, 8), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.8 }));
+        poste4.position.set(-12, 1.5, -12); lamp4.position.set(-12.1, 2.9, -12); lamp4.rotateZ(-45 * Math.PI / 180);
+        scene.add(poste4, lamp4);
+        // FRENTE - MEIO
+        const poste5 = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 3, 8), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.8 }));
+        const lamp5 = new THREE.Mesh(new THREE.ConeGeometry(0.25, 0.5, 8), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.8 }));
+        poste5.position.set(-12, 1.5, 0); lamp5.position.set(-12.1, 2.9, 0); lamp5.rotateZ(-45 * Math.PI / 180);
+        scene.add(poste5, lamp5);
+        // FRENTE - DIREITA
+        const poste6 = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 3, 8), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.8 }));
+        const lamp6 = new THREE.Mesh(new THREE.ConeGeometry(0.25, 0.5, 8), new THREE.MeshStandardMaterial({ roughness: 0.2, metalness: 0.8 }));
+        poste6.position.set(-12, 1.5, 12); lamp6.position.set(-12.1, 2.9, 12); lamp6.rotateZ(-45 * Math.PI / 180);
+        scene.add(poste6, lamp6);
+
+        // RUAS
+        const rua1 = new THREE.Mesh(new THREE.BoxGeometry(4, 34, 0.2), new THREE.MeshLambertMaterial({ color: 0x1C1C1C }));
+        rua1.position.set(15, 0.1, 0);
+        rua1.rotation.x = Math.PI * -.5;
+        scene.add(rua1);
+
+        const rua2 = new THREE.Mesh(new THREE.BoxGeometry(4, 34, 0.2), new THREE.MeshLambertMaterial({ color: 0x1C1C1C }));
+        rua2.position.set(-15, 0.1, 0);
+        rua2.rotation.x = Math.PI * -.5;
+        scene.add(rua2);
+
+        const rua3 = new THREE.Mesh(new THREE.BoxGeometry(27, 4, 0.2), new THREE.MeshLambertMaterial({ color: 0x1C1C1C }));
+        rua3.position.set(0, 0.1, 15);
+        rua3.rotation.x = Math.PI * -.5;
+        scene.add(rua3);
+
+        const rua4 = new THREE.Mesh(new THREE.BoxGeometry(27, 4, 0.2), new THREE.MeshLambertMaterial({ color: 0x1C1C1C }));
+        rua4.position.set(0, 0.1, -15);
+        rua4.rotation.x = Math.PI * -.5;
+        scene.add(rua4);
+
+        const rua5 = new THREE.Mesh(new THREE.BoxGeometry(4, 27, 0.2), new THREE.MeshLambertMaterial({ color: 0x1C1C1C }));
+        rua5.position.set(0, 0.1, 0);
+        rua5.rotation.x = Math.PI * -.5;
+        scene.add(rua5);
+
+
+        //PREDIOS
+
+        const predio1 = new THREE.Mesh(new THREE.BoxGeometry(5, 6, 8), new THREE.MeshLambertMaterial({ color: 0x404040 }));//PREDIO PEQUENO DIREITA
+        predio1.position.set(6, 4, 5);
+        predio1.rotation.x = Math.PI * -.5;
+        scene.add(predio1);
+
+        const predio2 = new THREE.Mesh(new THREE.BoxGeometry(5, 6, 8), new THREE.MeshLambertMaterial({ color: 404040 }));//PREDIO PEQUENO A ESQUERDA
+        predio2.position.set(-9, 4, 5);
+        predio2.rotation.x = Math.PI * -.5;
+        scene.add(predio2);
+
+        const predio3 = new THREE.Mesh(new THREE.BoxGeometry(5, 6, 10), new THREE.MeshLambertMaterial({ color: 404040 }));//PREDIO GRANDE A DIREITA
+        predio3.position.set(6, 5, -5);
+        predio3.rotation.x = Math.PI * -.5;
+        scene.add(predio3);
+
+        const predio4 = new THREE.Mesh(new THREE.BoxGeometry(5, 6, 10), new THREE.MeshLambertMaterial({ color: 0x404040 }));//PREDIO GRANDE A ESQUERDA
+        predio4.position.set(-9, 5, -5);
+        predio4.rotation.x = Math.PI * -.5;
+        scene.add(predio4);
+
+        //JANELAS
+
+        //Janelas predio grande tras
+        const janela = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 }));
+        janela.position.set(4.49, 8, -3);//lado, cima, frente-atrás
+        janela.rotation.x = Math.PI * -.5;
+        scene.add(janela);
+
+        const janela2 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 }));
+        janela2.position.set(4.49, 8, -5);//lado, cima, frente-atrás
+        janela2.rotation.x = Math.PI * -.5;
+        scene.add(janela2);
+
+        const janela3 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 }));
+        janela3.position.set(4.49, 8, -7);//lado, cima, frente-atrás
+        janela3.rotation.x = Math.PI * -.5;
+        scene.add(janela3);
+
+        const janela4 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 })); //janela grande - predio grande a direita
+        janela4.position.set(4.49, 5, -3);//lado, cima, frente-atrás
+        janela4.rotation.x = Math.PI * -.5;
+        scene.add(janela4);
+
+        const janela5 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 })); //janela grande - predio grande a direita
+        janela5.position.set(4.49, 5, -5);//lado, cima, frente-atrás
+        janela5.rotation.x = Math.PI * -.5;
+        scene.add(janela5);
+
+        const janela6 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 })); //janela grande - predio grande a direita
+        janela6.position.set(4.49, 5, -7);//lado, cima, frente-atrás
+        janela6.rotation.x = Math.PI * -.5;
+        scene.add(janela6);
+
+        //Porta predio grande tras
+        const porta1 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 3), new THREE.MeshLambertMaterial({ color: 0x392620 }));
+        porta1.position.set(4.49, 1.5, -3);//lado, cima, frente-atrás
+        porta1.rotation.x = Math.PI * -.5;
+        scene.add(porta1);
+
+        //Janelas predio grande frente
+        const janela7 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 }));
+        janela7.position.set(-10.51, 8, -3);//lado, cima, frente-atrás
+        janela7.rotation.x = Math.PI * -.5;
+        scene.add(janela7);
+
+        const janela8 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 }));
+        janela8.position.set(-10.51, 8, -5);//lado, cima, frente-atrás
+        janela8.rotation.x = Math.PI * -.5;
+        scene.add(janela8);
+
+        const janela9 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 }));
+        janela9.position.set(-10.51, 8, -7);//lado, cima, frente-atrás
+        janela9.rotation.x = Math.PI * -.5;
+        scene.add(janela9);
+
+        const janela10 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 })); //janela grande - predio grande a direita
+        janela10.position.set(-10.51, 5, -3);//lado, cima, frente-atrás
+        janela10.rotation.x = Math.PI * -.5;
+        scene.add(janela10);
+
+        const janela11 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 })); //janela grande - predio grande a direita
+        janela11.position.set(-10.51, 5, -5);//lado, cima, frente-atrás
+        janela11.rotation.x = Math.PI * -.5;
+        scene.add(janela11);
+
+        const janela12 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 })); //janela grande - predio grande a direita
+        janela12.position.set(-10.51, 5, -7);//lado, cima, frente-atrás
+        janela12.rotation.x = Math.PI * -.5;
+        scene.add(janela12);
+
+        //Porta predio grande a frente
+        const porta2 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 3), new THREE.MeshLambertMaterial({ color: 0x392620 }));
+        porta2.position.set(-10.51, 1.5, -3);//lado, cima, frente-atrás
+        porta2.rotation.x = Math.PI * -.5;
+        scene.add(porta2);
+
+        //JANELAS PREDIO PEQUENO A FRENTE
+
+        const janela13 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 })); //janela grande - predio grande a direita
+        janela13.position.set(-10.51, 5, 4);//lado, cima, frente-atrás
+        janela13.rotation.x = Math.PI * -.5;
+        scene.add(janela13);
+
+        const janela14 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 })); //janela grande - predio grande a direita
+        janela14.position.set(-10.51, 5, 6);//lado, cima, frente-atrás
+        janela14.rotation.x = Math.PI * -.5;
+        scene.add(janela14);
+
+        //PORTA PREDIO PEQUENO A FRENTE
+
+        const porta3 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 3), new THREE.MeshLambertMaterial({ color: 0x392620 }));
+        porta3.position.set(-10.51, 1.5, 4.5);//lado, cima, frente-atrás
+        porta3.rotation.x = Math.PI * -.5;
+        scene.add(porta3);
+
+        const porta4 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 3), new THREE.MeshLambertMaterial({ color: 0x392620 }));
+        porta4.position.set(-10.51, 1.5, 5.5);//lado, cima, frente-atrás
+        porta4.rotation.x = Math.PI * -.5;
+        scene.add(porta4);
+
+        //JANELAS PREDIO PEQUENO ATRAS
+
+        const janela15 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 })); //janela grande - predio grande a direita
+        janela15.position.set(4.49, 5, 4);//lado, cima, frente-atrás
+        janela15.rotation.x = Math.PI * -.5;
+        scene.add(janela15);
+
+        const janela16 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 2), new THREE.MeshLambertMaterial({ color: 0xFFD700 })); //janela grande - predio grande a direita
+        janela16.position.set(4.49, 5, 6);//lado, cima, frente-atrás
+        janela16.rotation.x = Math.PI * -.5;
+        scene.add(janela16);
+
+        //PORTA PREDIO PEQUENO ATRAS
+
+        const porta5 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 3), new THREE.MeshLambertMaterial({ color: 0x392620 }));
+        porta5.position.set(4.49, 1.5, 4.5);//lado, cima, frente-atrás
+        porta5.rotation.x = Math.PI * -.5;
+        scene.add(porta5);
+
+        const porta6 = new THREE.Mesh(new THREE.BoxGeometry(2, 1.5, 3), new THREE.MeshLambertMaterial({ color: 0x392620 }));
+        porta6.position.set(4.49, 1.5, 5.5);//lado, cima, frente-atrás
+        porta6.rotation.x = Math.PI * -.5;
+        scene.add(porta6);
+
+
+        // POSIÇÃO DA CAMERA
+
+        camera.position.x = -24;
+        camera.position.y = 22;
+        camera.position.z = 32;
+
+        //PARTE ESSENCIAL PRO GLTF RODAR
+
+        function dumpObject(obj, lines = [], isLast = true, prefix = '') {
+            const localPrefix = isLast ? '└─' : '├─';
+            lines.push(`${prefix}${prefix ? localPrefix : ''}${obj.name || 'no-name'} [${obj.type}]`);
+            const newPrefix = prefix + (isLast ? ' ' : '│ ');
+            const lastNdx = obj.children.length - 1;
+            obj.children.forEach((child, ndx) => {
+                const isLast = ndx === lastNdx;
+                dumpObject(child, lines, isLast, newPrefix);
+            });
+            return lines;
+        };
+
+        //spotlight
+        // poste tras - meio
+        const spotLight = new THREE.SpotLight(0xFFD700, 20, 10, Math.PI / 10, 0, 0);
+        spotLight.position.set(-1.1, 11, 0);
+        spotLight.target.position.set( 1.1, 11, -12);
+        spotLight.castShadow = true;
+        spotLight.shadow.mapSize.width = 1024;
+        spotLight.shadow.mapSize.height = 1024;
+        spotLight.shadow.camera.near = 500;
+        spotLight.shadow.camera.far = 4000;
+        spotLight.shadow.camera.fov = 30;
+        scene.add(spotLight);
+
+        //ROTACAO DA LUA E SOL
+        const mx = new THREE.Matrix4();
+        const my = new THREE.Matrix4();
+        mx.makeRotationX(-0.0040);
+        my.makeRotationY(0.00050);
+
+        var animate = function () {
+            requestAnimationFrame(animate);
+
+            //ROTACAO DO DONUT
+            donut.rotation.y += 0.01;
+
+            //ROTACAO DO SOL E LUA
+            lua.applyMatrix4(mx);
+            lua.applyMatrix4(my);
+            sol.applyMatrix4(mx);
+            sol.applyMatrix4(my);
+
+            controls.update();
+
+            renderer.render(scene, camera);
+        };
+        animate();
+    </script>
+</body>
+
+</html>
