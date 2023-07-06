@@ -12,6 +12,7 @@
             height: 100%
         }
     </style>
+    <link rel="icon" type="image/png" href="./img/city.png"/>
 </head>
 
 <body>
@@ -20,17 +21,26 @@
     <script src="js/loaders/GLTFLoader.js"></script>
     <script>
         
-        //CAMERA
         var scene = new THREE.Scene();
-        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 
+        // Criação da câmera
+        var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 0, 5); // Definindo a posição inicial da câmera
+        camera.lookAt(scene.position); // Faz a câmera olhar para o centro da cena
+
+        // Criação do renderizador
         var renderer = new THREE.WebGLRenderer();
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
+        // Controles da câmera
         var controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true; // Adiciona suavização aos controles da órbita
+        controls.dampingFactor = 0.05; // Define a quantidade de suavização
+        controls.screenSpacePanning = false; // Habilita a movimentação da câmera no plano XY
+
 
         //CARREGA AS TEXTURAS (BACKGROUND E GRAMA)
 
@@ -870,7 +880,6 @@
 
         var animate = function () {
             requestAnimationFrame(animate);
-
             //ROTACAO DO DONUT
             donut.rotation.y += 0.01;
 
